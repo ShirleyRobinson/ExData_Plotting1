@@ -1,0 +1,11 @@
+install.packages("data.table")
+library(data.table)
+png(file="./data/plot2.png", width = 480, height = 480)
+mydata<- fread("./Week1/household_power_consumption.txt")
+subsetData<- mydata[mydata$Date %in% c("1/2/2007","2/2/2007") ,]
+GlobalActivePower<- as.numeric(subsetData$Global_active_power)
+subsetData_Date <- as.Date(subsetData$Date, format="%d/%m/%Y")
+datetime<- paste(as.Date(subsetData_Date), subsetData$Time)
+DateTime <- as.POSIXct(datetime)
+with (subsetData, plot(GlobalActivePower~DateTime, type = "l", xlab= " ", ylab= "Global Active Power (kilowatts)"))
+dev.off()
